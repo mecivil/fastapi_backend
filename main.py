@@ -11,7 +11,7 @@ from database import (
     update_todo,
     remove_todo,
 )
-origins = ['https://farmstack-frontend.onrender.com/']
+origins = ['https://farmstack-frontend.vercel.app/']
 
 app.add_middleware(
     CORSMiddleware,
