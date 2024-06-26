@@ -11,7 +11,7 @@ from database import (
     update_todo,
     remove_todo,
 )
-origins = ['http://localhost:3000','http://localhost:8000','http://localhost:8000/api/todo']
+origins = ['http://localhost:3000','http://localhost:8000','http://localhost:8000/api/todo','https://farmstack-frontend.onrender.com/']
 
 app.add_middleware(
     CORSMiddleware,
