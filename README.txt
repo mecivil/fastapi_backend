@@ -1,6 +1,6 @@
 
 
-Two folders are created - backend and inside it frontend
+
 
 main.py has all the crud operations get, post, put and delete request . It also includes a simple authentication which uses a token that lasts for 30 minutes 
 
@@ -27,5 +27,5 @@ to run the backend:
    note the server response and a new user can be seen in the database TodoList under collections    todo
 12 )now click on authorize in top right corner and give the username and password you used for signup
 13 )respective post , update , create, get and delete can be made from fastapi swagger
-14 ) to use frontend we move into frontend folder typing cd frontend 
-15 type npm start and it will show up the frontend listing the values in the database . We can create and delete using the frontend
+14 ) to use frontend we move into frontend repository farmstack_frontend
+15 )type npm start and it will show up the frontend listing the values in the database if done locally. We can create and delete using the frontend. __The server is not running always due to limitation of resources on the hosted link however you can email me whenever you want to experience the frontend__.
