@@ -4,9 +4,9 @@
 
 main.py has all the crud operations get, post, put and delete request . It also includes a simple authentication which uses a token that lasts for 30 minutes 
 
-the database.py file has motor mongodb client that links our backend with with a mongodb database that has url : mongodb://localhost:27017
+the database.py file has motor mongodb client that links our backend with with a mongodb database mongodb://localhost:27017
 
-model.py has schema model Todo from basemodel and User class used in authentication
+model.py has schema models Todo and NewUser from pydantic basemodel and User and Admin document models used in authentication
 
 to run the backend:
 
