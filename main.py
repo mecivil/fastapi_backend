@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import json
 #App object
 app = FastAPI()
-from model import Todo , User , NewUser
+from model import Todo , User , NewUser , Admin
 from database import (
     fetch_one_todo,
     fetch_all_todos,
@@ -91,6 +91,17 @@ def sign_up(new_user:NewUser):
                 password=get_password_hash(new_user.password))
         user.save()
         return {"message":"New user created successfully"}
+    
+@app.post("/sign_up_admin")
+def sign_up(new_user:NewUser):
+    try:
+        user= json.loads(Admin.objects.get(username=new_user.username).to_json())
+        raise HTTPException(status_code=403,detail="User already exists")
+    except Admin.DoesNotExist:
+        user=Admin(username=new_user.username,
+                password=get_password_hash(new_user.password))
+        user.save()
+        return {"message":"New user created successfully"}
 
 from fastapi.security import OAuth2PasswordBearer , OAuth2PasswordRequestForm
 from fastapi import Depends
@@ -107,6 +118,14 @@ def authenticate_user(username,password):
         password_check=pwd_context.verify(password,user['password'])
         return password_check
     except User.DoesNotExist:
+        return False
+    
+def authenticate_admin(username,password):
+    try:
+        user= json.loads(Admin.objects.get(username=username).to_json())
+        password_check=pwd_context.verify(password,user['password'])
+        return password_check
+    except Admin.DoesNotExist:
         return False
     
 
@@ -128,7 +147,18 @@ def login(form_data:OAuth2PasswordRequestForm = Depends()):
         return {"access_token":access_token,"token_type":"bearer"}
     else :
         raise HTTPException(status_code=400,detail="Incorrect username or password")
-    print(username,password)
+
+@app.post("/token_admin")
+def login(form_data:OAuth2PasswordRequestForm = Depends()):
+    username=form_data.username
+    password=form_data.password
+    if authenticate_admin(username,password):
+        access_token=create_access_token(
+            data={"sub":username},expires_delta=timedelta(minutes=30)
+        )
+        return {"access_token":access_token,"token_type":"bearer"}
+    else :
+        raise HTTPException(status_code=400,detail="Incorrect username or password")
 
 
 def verify_token(token: str = Depends(oauth2_scheme)):

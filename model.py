@@ -10,6 +10,10 @@ class User(Document):
     username = StringField()
     password = StringField()
 
+class Admin(Document):
+    username = StringField()
+    password = StringField()
+
 class NewUser(BaseModel):
     username:str
     password:str
